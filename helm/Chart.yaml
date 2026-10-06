@@ -1,0 +1,5 @@
+apiVersion: v2
+name: ferris-workflow
+version: 0.1.0
+appVersion: "0.1.0"
+description: A Helm chart for ferris-workflow

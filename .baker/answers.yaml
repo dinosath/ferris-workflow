@@ -1,0 +1,44 @@
+ci_cd:
+  - github
+
+entities:
+  Workflow:
+    kind: collectionType
+    collectionName: workflows
+    priority: 1
+    info:
+      displayName: Workflow
+      singularName: workflow
+      pluralName: workflows
+      description: Workflow definition managed through the workflow CRUD endpoints
+    attributes:
+      name:
+        type: string
+        required: true
+      description:
+        type: string
+        required: false
+      active:
+        type: boolean
+        required: true
+        default: false
+      version:
+        type: integer
+        required: true
+        min: 1
+        default: 1
+      definition_json:
+        type: string
+        required: true
+
+features:
+  - open-telemetry
+  - helm
+
+protocols:
+  - connect
+
+frontend: shadcn-admin-kit
+frontend_protocol: connect
+
+project_name: ferris-workflow

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ferris-workflow-deployment
+  labels:
+    app: ferris-workflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ferris-workflow
+  template:
+    metadata:
+      labels:
+        app: ferris-workflow
+    spec:
+      containers:
+        - name: ferris-workflow
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.service.port }}

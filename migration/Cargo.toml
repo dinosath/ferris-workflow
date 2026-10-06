@@ -1,0 +1,15 @@
+[package]
+name = "migration"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[lib]
+name = "migration"
+path = "src/lib.rs"
+
+[dependencies]
+automod.workspace = true
+sea-orm-migration.workspace = true
+tokio.workspace = true

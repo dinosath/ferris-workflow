@@ -1,0 +1,59 @@
+version: '1'
+generated_at: 2026-10-04T17:21:36.975329+00:00
+template:
+  type: filesystem
+  path: ../saas-templates
+  hash: 217a1b6b75c42720fbd6a528394ae852bb721c1d7e8b4d459a79e8adec8ba086
+answers:
+  add_migrations: true
+  authentication: none
+  automod: true
+  backend: axum
+  ci_cd:
+  - github
+  database: postgres
+  db_schema: public
+  docker_hardened_images: true
+  entities:
+    Workflow:
+      attributes:
+        active:
+          default: false
+          required: true
+          type: boolean
+        definition_json:
+          required: true
+          type: string
+        description:
+          required: false
+          type: string
+        name:
+          required: true
+          type: string
+        version:
+          default: 1
+          min: 1
+          required: true
+          type: integer
+      collectionName: workflows
+      info:
+        description: Workflow definition managed through the workflow CRUD endpoints
+        displayName: Workflow
+        pluralName: workflows
+        singularName: workflow
+      kind: collectionType
+      priority: 1
+  features:
+  - open-telemetry
+  - helm
+  frontend: shadcn-admin-kit
+  frontend_protocol: connect
+  id_type: integer
+  orm: seaorm
+  project_edition: '2024'
+  project_name: ferris-workflow
+  project_version: 0.1.0
+  protocols:
+  - connect
+  row_level_security: false
+  security_level: standard

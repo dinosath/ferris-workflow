@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  ferris-workflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432
+    depends_on:
+      - postgres
+    profiles:
+      - build
+  ferris-workflow_runtime:
+    image: ferris-workflow:latest
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432
+    depends_on:
+      - postgres
+    profiles:
+      - runtime
+
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 5432:5432
+  
+  mockserver:
+    image: mockserver/mockserver:latest
+    ports:
+      - 1080:1080
+    environment:
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/expectations.json
+      MOCKSERVER_WATCH_INITIALIZATION_JSON: "true"
+    volumes:
+      - ./mockserver:/config
+    profiles:
+      - mock

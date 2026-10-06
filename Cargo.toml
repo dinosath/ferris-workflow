@@ -1,0 +1,63 @@
+[package]
+name = "ferris-workflow"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
+debug = false
+incremental = false
+overflow-checks = false
+
+[workspace]
+exclude = ["e2e"]
+
+
+
+members = ["migration", "dev-runner"]
+
+
+[workspace.dependencies]
+automod = "1.0"
+sea-orm-migration = { version = "2.0", features = ["runtime-tokio-rustls", "sqlx-postgres"], default-features = false }
+tokio = { version = "1", features = ["full"] }
+[dependencies]
+automod.workspace = true
+axum = { version = "0.8" }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+migration = { path = "migration" }
+serde = "1.0"
+serde_json = "1.0"
+serde_yaml = "0.9"
+serde_with = "3.16"
+sea-orm = { version = "2.0", features = ["sqlx-postgres","runtime-tokio-rustls","macros","with-chrono","with-json","with-uuid","schema-sync","entity-registry","rbac"], default-features = false }
+static-serve = "0.6"
+tower-http = { version = "0.6", features = ["set-header"] }
+validator = { version = "0.21", features = ["derive"] }
+serverless_workflow_core = { git = "https://github.com/open-workflow-specification/sdk-rust", rev = "12d7c5b2ef76bc5186f949e3a3d649db6a3f3ba5" }
+
+connectrpc = { version = "0.9.1", default-features = false, features = ["json", "axum"] }
+buffa = { version = "0.9", features = ["json"] }
+tower = { version = "0.5", features = ["util"] }
+tokio.workspace = true
+mimalloc = { version = "0.1.50", features = ["secure"] }
+[dev-dependencies]
+axum-test = "21.1"
+testcontainers = "0.27"
+testcontainers-modules = { version = "0.15", features = ["postgres"] }
+reqwest = { version = "0.13", features = ["json", "cookies"], default-features = false }
+serial_test = "4"
+
+[build-dependencies]
+connectrpc-build = "0.9.0"
+prost = "0.14"
+protox = "0.9"
